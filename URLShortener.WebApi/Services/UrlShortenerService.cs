@@ -44,13 +44,11 @@ namespace URLShortener.WebApi.Services
             }
             else
             {
+                string shortenedPath = _urlShortenerHelper.HashUrl(originalUrl, _urlShortenerConfig.HashLength);
+
                 if (_urlShortenerHelper.CheckUrlValidity(originalUrl))
                 {
-                    string path = _urlShortenerHelper.SplitUrl(originalUrl);
-                    string shortenedUrl = _urlShortenerConfig.ShortenedHost + 
-                        _urlShortenerHelper.HashPath(path, _urlShortenerConfig.HashLength);
-
-                    url = new UrlShortenerModel { OriginalUrl = originalUrl, ShortenedUrl = shortenedUrl };
+                    url = new UrlShortenerModel { OriginalUrl = originalUrl, ShortenedPath = shortenedPath };
                     return await _urlShortenerRepository.AddUrl(url);
                 }
                 else
@@ -68,7 +66,7 @@ namespace URLShortener.WebApi.Services
 
             if (result != null)
             {
-                throw new UrlAlreadyExistsException("Requested custom url " + customUrl + " already exists");
+                throw new PathAlreadyExistsException("Custom path: " + result.ShortenedPath + " already exists");
             }
             else
             {
@@ -76,7 +74,7 @@ namespace URLShortener.WebApi.Services
                 {
                     url = new UrlShortenerModel { 
                         OriginalUrl = originalUrl, 
-                        ShortenedUrl = _urlShortenerConfig.ShortenedHost + customUrl 
+                        ShortenedPath = customUrl
                     };
                     return await _urlShortenerRepository.AddUrl(url);
                 }
@@ -91,5 +89,6 @@ namespace URLShortener.WebApi.Services
         {
             return await _urlShortenerRepository.GetAllUrls();
         }
+
     }
 }

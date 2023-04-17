@@ -3,6 +3,6 @@
     public class UrlShortenerRequestModel
     {
         public string OriginalUrl { get; set; }
-        public string CustomUrl { get; set; }
+        public string CustomPath { get; set; }
     }
 }

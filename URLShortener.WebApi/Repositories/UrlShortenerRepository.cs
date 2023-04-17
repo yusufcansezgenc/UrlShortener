@@ -7,7 +7,7 @@ namespace UrlShortener.WebApi.Repositories
     {
         public async Task<UrlShortenerModel?> GetUrlByShortenedUrl(string shortenedUrl)
         {
-            return await Task.Run(() => BaseCollection.Data.Find(data => data.ShortenedUrl == shortenedUrl));
+            return await Task.Run(() => BaseCollection.Data.Find(data => data.ShortenedPath == shortenedUrl));
         }
 
         public async Task<UrlShortenerModel> AddUrl(UrlShortenerModel model)

@@ -8,9 +8,9 @@ namespace UrlShortener.WebApi.Services.Helpers
 {
     public class UrlShortenerHelper : IUrlShortenerHelper
     {
-        public string HashPath(string path, int hashLength)
+        public string HashUrl(string url, int hashLength)
         {
-            byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(path);
+            byte[] inputBytes = System.Text.Encoding.UTF8.GetBytes(url);
             byte[] hashBytes = XxHash64.Hash(inputBytes);
 
             string result = Convert.ToHexString(hashBytes);
@@ -21,12 +21,6 @@ namespace UrlShortener.WebApi.Services.Helpers
         public Boolean CheckUrlValidity(string originalUrl)
         {
             return (Uri.IsWellFormedUriString(originalUrl, UriKind.Absolute));
-        }
-
-        public string SplitUrl(string originalUrl)
-        {
-            Uri uri = new Uri(originalUrl);
-            return uri.AbsolutePath;
         }
     }
 }

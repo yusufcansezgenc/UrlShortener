@@ -2,7 +2,7 @@
 {
     public class UrlShortenerConfig
     {
-        public String ShortenedHost { get; set; }
+        public string ShortenedHost { get; set; }
         public int HashLength { get; set; }
     }
 }

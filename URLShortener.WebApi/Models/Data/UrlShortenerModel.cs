@@ -4,6 +4,6 @@
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
         public string OriginalUrl { get; set; }
-        public string ShortenedUrl { get; set; }
+        public string ShortenedPath { get; set; }
     }
 }

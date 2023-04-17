@@ -5,7 +5,6 @@
         public UrlNotFoundException(string message)
             : base(message)
         {
-
         }
     }
 }
