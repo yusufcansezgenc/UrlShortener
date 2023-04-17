@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Annotations;
 using UrlShortener.WebApi.Models.Data;
 using URLShortener.WebApi.Config;
 using URLShortener.WebApi.Models.Web;
@@ -16,8 +17,11 @@ namespace UrlShortener.WebApi.Controllers
             _urlShortenerService = urlShortenerService;
         }
 
+        
         [HttpPost]
-        [Route("api/url/shorten")]
+        [Route("api/url/shorten-hash")]
+        [Produces("application/json")]
+        [SwaggerOperation(Summary = "Shortens given URL by hashing it and adds it to the data store.")]
         public async Task<IActionResult> ShortenUrl([FromBody] UrlShortenerRequestModel request)
         {
             return Ok(await _urlShortenerService.ShortenUrl(request.OriginalUrl));
@@ -25,6 +29,8 @@ namespace UrlShortener.WebApi.Controllers
 
         [HttpPost]
         [Route("api/url/shorten-custom")]
+        [Produces("application/json")]
+        [SwaggerOperation(Summary = "Shortens given URL by given custom path it and adds it to the data store.")]
         public async Task<IActionResult> ShortenUrlCustom([FromBody] UrlShortenerRequestModel request)
         {
             return Ok(await _urlShortenerService.ShortenUrl(request.OriginalUrl, request.CustomPath));
@@ -32,6 +38,8 @@ namespace UrlShortener.WebApi.Controllers
 
         [HttpPost]
         [Route("api/url/find-original")]
+        [Produces("application/json")]
+        [SwaggerOperation(Summary = "Returns original URL by shortened path.")]
         public async Task<IActionResult> GetOriginalUrl([FromBody] UrlShortenerRequestModel request)
         {
             return Ok(await _urlShortenerService.GetOriginalUrl(request.CustomPath));
@@ -39,6 +47,8 @@ namespace UrlShortener.WebApi.Controllers
 
         [HttpGet]
         [Route("api/url/find-all")]
+        [Produces("application/json")]
+        [SwaggerOperation(Summary = "Returns all shortened URLs")]
         public async Task<IActionResult> GetAllUrls()
         {
             return Ok(await _urlShortenerService.GetAllUrls());
@@ -46,6 +56,7 @@ namespace UrlShortener.WebApi.Controllers
 
         [HttpGet]
         [Route("{path}")]
+        [SwaggerOperation(Summary = "Redirects given shortened URL.")]
         public async Task<IActionResult> RedirectUrl(string path)
         {
             UrlShortenerModel url = await _urlShortenerService.GetOriginalUrl(path);

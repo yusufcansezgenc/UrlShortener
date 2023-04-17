@@ -1,3 +1,4 @@
+using Microsoft.OpenApi.Models;
 using UrlShortener.WebApi.Exceptions;
 using UrlShortener.WebApi.Repositories;
 using UrlShortener.WebApi.Services.Helpers;
@@ -14,7 +15,27 @@ builder.Services.Configure<UrlShortenerConfig>(builder.Configuration.GetSection(
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.EnableAnnotations();
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Url Shortener API",
+        Description = "An ASP.NET Core Web API for creating short URLs",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Example Contact",
+            Url = new Uri("https://example.com/contact")
+        },
+        License = new OpenApiLicense
+        {
+            Name = "Example License",
+            Url = new Uri("https://example.com/license")
+        }
+    });
+});
 
 builder.Services.AddSingleton<IUrlShortenerRepository, UrlShortenerRepository>();
 builder.Services.AddSingleton<IUrlShortenerHelper, UrlShortenerHelper>();
