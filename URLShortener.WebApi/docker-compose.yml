@@ -1,0 +1,9 @@
+﻿version: '2'
+services:
+    url-shortener-api:
+      build:
+        context: ../
+        dockerfile: ./UrlShortener.WebApi/Dockerfile
+      restart: always
+      ports:
+        - 5065:80

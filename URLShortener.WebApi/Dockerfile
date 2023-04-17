@@ -6,16 +6,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
-COPY ["URLShortener.WebApi/URLShortener.WebApi.csproj", "URLShortener.WebApi/"]
-RUN dotnet restore "URLShortener.WebApi/URLShortener.WebApi.csproj"
+COPY ["URLShortener.WebApi/UrlShortener.WebApi.csproj", "URLShortener.WebApi/"]
+RUN dotnet restore "URLShortener.WebApi/UrlShortener.WebApi.csproj"
 COPY . .
 WORKDIR "/src/URLShortener.WebApi"
-RUN dotnet build "URLShortener.WebApi.csproj" -c Release -o /app/build
+RUN dotnet build "UrlShortener.WebApi.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "URLShortener.WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "UrlShortener.WebApi.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "URLShortener.dll"]
+ENTRYPOINT ["dotnet", "UrlShortener.WebApi.dll"]
