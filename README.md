@@ -1,5 +1,5 @@
 ﻿## URL Shortening Service
-A URL Shortening Service that uses collections.
+An URL Shortening Service that uses collections.
 
 ### Capabilities
 * Hash shortening based on Xxh64(https://learn.microsoft.com/en-us/dotnet/api/system.io.hashing.xxhash64?view=dotnet-plat-ext-7.0)
